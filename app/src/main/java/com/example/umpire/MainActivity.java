@@ -1,6 +1,8 @@
 package com.example.umpire;
 
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -40,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.upStrikeButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                countUp(view, strikeNum);
+                countUpStrikes(view, strikeNum);
             }
         });
 
@@ -49,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.upBallButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                countUp(view, ballNum);
+                countUpBalls(view, ballNum);
             }
         });
 
@@ -88,13 +90,68 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    // Helper method to increment a text counter
-    private void countUp(View view, TextView textView) {
+    // Helper method to increment a strike text counter
+    private void countUpStrikes(View view, TextView textView) {
         String intString = textView.getText().toString();
         Integer count = Integer.parseInt(intString);
         count++;
+
+        if(count == 3){
+            new AlertDialog.Builder(MainActivity.this)
+                    .setTitle("Strike Out!")
+                    .setMessage("Out!")
+                    .setCancelable(true)
+                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.cancel();
+                        }
+                    })
+                    .setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            //do nothing
+                        }
+                    }).show();
+            count = 0;
+            ballNum.setText(count.toString());
+            strikeNum.setText(count.toString());
+        }
+
         textView.setText(count.toString());
     }
+
+    // Helper method to increment a strike text counter
+    private void countUpBalls(View view, TextView textView) {
+        String intString = textView.getText().toString();
+        Integer count = Integer.parseInt(intString);
+        count++;
+
+        if(count == 4){
+            new AlertDialog.Builder(MainActivity.this)
+                    .setTitle("Walk!")
+                    .setMessage("Walk!")
+                    .setCancelable(true)
+                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            dialogInterface.cancel();
+                        }
+                    })
+                    .setPositiveButton("Reset", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            //do nothing
+                        }
+                    }).show();
+            count = 0;
+            ballNum.setText(count.toString());
+            strikeNum.setText(count.toString());
+        }
+
+        textView.setText(count.toString());
+    }
+
 
     // Helper method to decrement a text counter
     private void countDown(View view, TextView textView) {
