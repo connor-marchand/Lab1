@@ -21,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
     Button downBallButton;
     Button clearButton;
     Button exitButton;
+    Button aboutButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
         downBallButton = findViewById(R.id.downBallButton);
         clearButton = findViewById(R.id.clearButton);
         exitButton = findViewById(R.id.exitButton);
+        aboutButton = findViewById(R.id.aboutButton);
 
 
 
@@ -88,6 +90,23 @@ public class MainActivity extends AppCompatActivity {
                 System.exit(1);
             }
         });
+
+        // When button is pressed information displayed
+        findViewById(R.id.aboutButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new AlertDialog.Builder(MainActivity.this)
+                        .setTitle("Umpire Buddy 2.0")
+                        .setMessage("Author: Connor Marchand")
+                        .setCancelable(true)
+                        .setNegativeButton("Back", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.cancel();
+                            }
+                        }).show();
+            }
+        });
     }
 
     // Helper method to increment a strike text counter
@@ -107,7 +126,7 @@ public class MainActivity extends AppCompatActivity {
                             dialogInterface.cancel();
                         }
                     })
-                    .setPositiveButton("Okay", new DialogInterface.OnClickListener() {
+                    .setPositiveButton("Reset", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             //do nothing
